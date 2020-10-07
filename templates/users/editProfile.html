@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %} {% load static %} {% block title %}Profile{% endblock title %} {% block body %}
+<div class="flex items-center justify-center mt-10">
+    <div class="rounded rounded-t-lg overflow-hidden shadow max-w-xs">
+        <img src="{% static 'users/img/profile_back.jpg' %}" class="w-full h-40" />
+        <div class="flex justify-center -mt-24">
+            <img src="{{user.profile.image.url}}"
+                class="rounded-full border-solid border-white border-2 -mt-3 h-48 w-48">
+        </div>
+        <form action="{% url 'EditProfile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="text-center mt-2 px-3 pb-6 pt-2">
+                <div class="-mt-4">
+                    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"
+                    rel="stylesheet" />
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                    <div class="element">
+                        <i class="fa fa-camera"></i>
+                        <input type="file" name="image" id="file">
+                    </div>
+                    <h3 class="text-black text-sm bold font-sans mt-2">{{user.first_name}} {{user.last_name}}</h3>
+                    <input
+                        class="w-48 px-3 py-2 mb-2 mt-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="username" name="username" value="{{user.username}}" type="text" placeholder="Username"
+                        required />
+                    <input
+                        class="w-56 px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                        id="email" name="email" value="{{user.email}}" type="Email" placeholder="Email" required />
+                </div>
+                <button
+                    class="inline-flex items-center bg-indigo-600 border-0 py-1 px-3 text-sm focus:outline-none hover:bg-indigo-500 rounded text-white mt-4 ml-6 mr-10 md:mt-4">
+                    Update
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock body %}

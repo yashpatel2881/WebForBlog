@@ -1,0 +1,37 @@
+{% extends 'blog/base.html' %} {% block title %}Home{% endblock title %} {% block body %}
+
+<section class="text-gray-700 body-font">
+    <div class="container px-5 py-10 mx-auto">
+        <div class="flex flex-wrap">
+            <div class="p-4 md:w-3/4 ml-40">
+                <div class="flex rounded-lg h-full bg-gray-100 p-8 flex-col">
+                    {% if request.user.id == post.user.id %}
+                    <div class="edit-icon flex justify-end -mt-4 mr-4 ">
+                        <a href="{% url 'EditPost' post.id %}"><i class="fas fa-edit mr-2"></i></a>
+                    </div>
+                    <div class="dlt-icon flex justify-end -mt-6">
+                        <a href="{% url 'DeletePost' post.id %}"><i class="fas fa-trash"></i></a>
+                    </div>
+                    {% endif %}
+                    <div class="flex justify-start mt-1 mb-6 image-container">
+                        <img src="{{post.user.profile.image.url}}" class="rounded-full border-solid border-white border-2 -mt-3 h-32 w-32 home-image">
+                    </div>
+                    <div class="container-box -mt-32 -ml-10">
+                        <div class="flex items-center mb-3 ml-48">
+                        <h2 class="text-gray-900 text-sm font font-medium">By,
+                            <font style="color: #596ecc;">{{post.user.first_name}} {{post.user.last_name}}</font>
+                            On {{post.date|date:"d F, Y - g:i A"}}
+                        </h2>
+                    </div>
+                    <h4 class="text-gray-900 text-2xl ml-48 font font-medium">{{post.title}}</h4>
+                    <div class="flex-grow">
+                        <p class="leading-relaxed ml-48 text-gray-900">{{post.desc}}</p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}

@@ -1,0 +1,123 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--Bootstrap css-->
+    {% comment %} <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> {% endcomment %}
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css'%}">
+    <title>BlogApp | {% block title %}{% endblock title %}</title>
+    <style>
+        .dropdown {
+        position: relative;
+        display: inline-block;
+        }
+
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        margin-right: 20px;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 1;
+        }
+
+        .dropdown:hover .dropdown-content {
+        display: block;
+        }
+        
+        .edit-icon{
+            position: relative;
+        }
+
+        .edit-icon a:hover{
+            color: blue;
+        }
+
+        .dlt-icon a:hover{
+            color: red;
+        }
+
+        .element {
+        display: inline-flex;
+        align-items: center;
+        }
+        i.fa-camera {
+        margin: 10px;
+        cursor: pointer;
+        font-size: 30px;
+        }
+        i:hover {
+        opacity: 0.6;
+        }
+        #file {
+        display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header class="text-gray-700 body-font">
+        <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+            <a href="{% url 'HomePage' %}" class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+            <span class="ml-3 text-xl">Blog App</span>
+            </a>
+            <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center nav-list">
+            <!-- <a class="mr-5 hover:text-gray-900" href="{% url 'HomePage' %}">Home</a>
+            <a class="mr-5 hover:text-gray-900" href="{% url 'AboutPage' %}">About</a> -->
+            </nav>
+            <div class="dropdown">
+                <span>Hello, {{user.first_name}} {{user.last_name}}</span>
+                <div class="dropdown-content">
+                    <a href="{% url 'ProfilePage' %}">Profile</p>
+                    <a href="{% url 'ResetPassword' %}">Reset Password</p>
+                    <a href="{% url 'Logout' %}">Sign out</p>
+                </div>
+            </div>
+            <a href="{% url 'CreatePost' %}" class="nav-list -mt-1">
+                <button class="inline-flex items-center bg-indigo-600 border-0 py-1 px-3 text-sm focus:outline-none hover:bg-indigo-500 rounded text-white mt-4 ml-6 mr-10 md:mt-0">Create Post
+                </button>
+            </a>
+        </div>
+    </header>
+
+    <hr>
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="bg-teal-100 border-t-2 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+        <div class="flex">
+            <div class="py-1"><svg class="fill-current h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+            <div>
+                <p class="font-bold mt-1">{{message}}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+    {% block body %} {% endblock body %}
+    
+</body>
+<script>
+    $("i").click(function () {
+        $("input[type='file']").trigger('click');
+      });
+      
+      $('input[type="file"]').on('change', function() {
+        var val = $(this).val();
+        $(this).siblings('span').text(val);
+      })
+</script>
+
+</html>
